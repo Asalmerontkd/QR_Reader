@@ -1,3 +1,5 @@
+import 'package:barcode_scan/barcode_scan.dart';
+
 import 'package:flutter/material.dart';
 import 'package:qrreaderapp/src/pages/home_page.dart';
  

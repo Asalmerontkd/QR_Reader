@@ -1,3 +1,4 @@
+import 'package:barcode_scan/barcode_scan.dart';
 import 'package:flutter/material.dart';
 import 'package:qrreaderapp/src/pages/direcciones_page.dart';
 import 'package:qrreaderapp/src/pages/mapas_page.dart';
@@ -26,10 +27,25 @@ class _HomePageState extends State<HomePage> {
         child: Icon(
           Icons.filter_center_focus
         ),
-        onPressed: (){},
+        onPressed: _scanQR,
         backgroundColor: Theme.of(context).primaryColor,
       ),
     );
+  }
+
+  _scanQR() async {
+    dynamic futureString = '';
+    /*try {
+      futureString = await BarcodeScanner.scan();
+    } catch (e) {
+      futureString = e.toString();
+    }
+
+    print('Future String: ${ futureString.rawContent }');
+
+    if (futureString != null) {
+      print('Tenemos informacion');
+    }*/
   }
 
   Widget _callPage(int paginaActual){
