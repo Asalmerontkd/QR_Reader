@@ -3,7 +3,13 @@ class ScanModel {
         this.id,
         this.tipo,
         this.valor,
-    });
+    }){
+      if (this.valor.contains('http')){
+        this.tipo = 'http';
+      } else {
+        this.tipo = 'geo';
+      }
+    }
 
     int id;
     String tipo;
