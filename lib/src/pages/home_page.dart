@@ -2,6 +2,7 @@ import 'package:barcode_scan/barcode_scan.dart';
 import 'package:flutter/material.dart';
 import 'package:qrreaderapp/src/pages/direcciones_page.dart';
 import 'package:qrreaderapp/src/pages/mapas_page.dart';
+import 'package:qrreaderapp/src/providers/db_provider.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -34,7 +35,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   _scanQR() async {
-    dynamic futureString = '';
+    dynamic futureString = 'https://www.google.com/';
     /*try {
       futureString = await BarcodeScanner.scan();
     } catch (e) {
@@ -42,10 +43,12 @@ class _HomePageState extends State<HomePage> {
     }
 
     print('Future String: ${ futureString.rawContent }');
-
+    */
     if (futureString != null) {
-      print('Tenemos informacion');
-    }*/
+      final scan = ScanModel( valor: futureString );
+      final res = DBProvider.db.nuevoScan(scan);
+      print('HAY DATOS:  ${ res.toString() }');
+    }
   }
 
   Widget _callPage(int paginaActual){

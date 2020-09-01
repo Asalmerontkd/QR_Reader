@@ -1,9 +1,10 @@
 import 'dart:io';
 
 import 'package:path/path.dart';
-import 'package:qrreaderapp/src/models/scan_model.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:qrreaderapp/src/models/scan_model.dart';
+export 'package:qrreaderapp/src/models/scan_model.dart';
 
 class DBProvider {
   static Database _database;
@@ -32,7 +33,7 @@ class DBProvider {
           'CREATE TABLE Scans ('
           ' id INTEGER PRIMARY KEY,'
           ' tipo TEXT,'
-          ' valor TEST'
+          ' valor TEXT'
           ')'
         );
       }
@@ -40,7 +41,7 @@ class DBProvider {
   }
 
   // CREAR REGISTROS BD
-  nuevoScanRaw( ScanModel  nuevoScan ) async {
+  Future<int> nuevoScanRaw( ScanModel  nuevoScan ) async {
     final db = await database;
     final res = await db.rawInsert(
       "INSERT INTO Scans (id, tipo, valor) "
@@ -49,10 +50,10 @@ class DBProvider {
     return res;
   }
 
-  nuevoScan( ScanModel nuevoScan ) async{
+  Future<int> nuevoScan( ScanModel nuevoScan ) async{
     final db = await database;
-    final res = db.insert('Scans', nuevoScan.toJson());
-    return res;
+    final res = await db.insert('Scans', nuevoScan.toJson()) ;
+    return res ;
   }
 
    // REALIZAR CONSULTAS
@@ -78,5 +79,25 @@ class DBProvider {
                             ? res.map( (c) => ScanModel.fromJson(c) ).toList()
                             : [];
     return list;
+  }
+
+  // REALUZAR UPDATE
+  Future<int> updateScan( ScanModel nuevoScan ) async {
+    final db = await database;
+    final res = await db.update('Scans', nuevoScan.toJson(), where: 'id = ?', whereArgs: [nuevoScan.id]);
+    return res;
+  }
+
+  // DELETE
+  Future<int> deleteScan(int id  ) async{
+    final db = await database;
+    final res = await db.delete('Scans', where: 'id = ?', whereArgs: [id]);
+    return res;
+  }
+
+  Future<int> deleteAll(int id  ) async{
+    final db = await database;
+    final res = await db.rawDelete("DELETE FROM Scans");
+    return res;
   }
 }
