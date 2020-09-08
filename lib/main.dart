@@ -2,6 +2,7 @@ import 'package:barcode_scan/barcode_scan.dart';
 
 import 'package:flutter/material.dart';
 import 'package:qrreaderapp/src/pages/home_page.dart';
+import 'package:qrreaderapp/src/pages/mapa_page.dart';
  
 void main() => runApp(MyApp());
  
@@ -13,7 +14,8 @@ class MyApp extends StatelessWidget {
       title: 'QR Reader',
       initialRoute: 'home',
       routes: {
-        'home' : (BuildContext context) => HomePage()
+        'home' : (BuildContext context) => HomePage(),
+        'mapa' : (BuildContext context) => MapaPage()
       },
       theme: ThemeData(
         primaryColor: Colors.deepPurple

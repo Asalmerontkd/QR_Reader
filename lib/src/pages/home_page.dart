@@ -36,14 +36,14 @@ class _HomePageState extends State<HomePage> {
         child: Icon(
           Icons.filter_center_focus
         ),
-        onPressed: _scanQR,
+        onPressed: () => _scanQR(context),
         backgroundColor: Theme.of(context).primaryColor,
       ),
     );
   }
 
-  _scanQR() async {
-    dynamic futureString = 'https://www.google.com/';
+  _scanQR(BuildContext context) async {
+    dynamic futureString = 'geo:19.29615667519792,-99.18005818018051';
     /*try {
       futureString = await BarcodeScanner.scan();
     } catch (e) {
@@ -60,10 +60,10 @@ class _HomePageState extends State<HomePage> {
 
       if( Platform.isIOS ){
         Future.delayed( Duration(milliseconds: 750), () {
-          utils.abrirScan( scan );
+          utils.abrirScan(context, scan );
         } );
       } else {
-        utils.abrirScan( scan );
+        utils.abrirScan(context, scan );
       }
 
       
