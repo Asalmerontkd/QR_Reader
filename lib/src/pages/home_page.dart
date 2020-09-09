@@ -43,17 +43,17 @@ class _HomePageState extends State<HomePage> {
   }
 
   _scanQR(BuildContext context) async {
-    dynamic futureString = 'geo:19.29615667519792,-99.18005818018051';
-    /*try {
+    dynamic futureString;
+    try {
       futureString = await BarcodeScanner.scan();
     } catch (e) {
       futureString = e.toString();
     }
 
     print('Future String: ${ futureString.rawContent }');
-    */
-    if (futureString != null) {
-      final scan = ScanModel( valor: futureString );
+    
+    if (futureString.rawContent != null) {
+      final scan = ScanModel( valor: futureString.rawContent );
       //final res = DBProvider.db.nuevoScan(scan);
       //print('HAY DATOS:  ${ res.toString() }');
       scansBloc.agregarScan(scan);
