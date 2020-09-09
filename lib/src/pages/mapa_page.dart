@@ -4,6 +4,8 @@ import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong/latlong.dart';
 
 class MapaPage extends StatelessWidget {
+  final MapController map = MapController();
+
   @override
   Widget build(BuildContext context) {
     final ScanModel scan = ModalRoute.of(context).settings.arguments;
@@ -13,7 +15,12 @@ class MapaPage extends StatelessWidget {
         actions: <Widget>[
           IconButton(
             icon: Icon(Icons.my_location), 
-            onPressed: () {}
+            onPressed: () {
+              map.move(
+                scan.getLatLng(),
+                15
+              );
+            }
           )
         ],
       ),
@@ -23,12 +30,14 @@ class MapaPage extends StatelessWidget {
 
   Widget _crearFlutterMap( ScanModel scan ) {
     return FlutterMap(
+      mapController: map,
       options: MapOptions(
         center: scan.getLatLng(),
         zoom: 15
       ),
       layers: [
         _crearMapa(),
+        _crearMarcadores( scan ),
       ],
     );
   }
@@ -39,8 +48,27 @@ class MapaPage extends StatelessWidget {
       additionalOptions: {
         'accessToken' : 'pk.eyJ1IjoiYXNhbG1lcm9udGtkIiwiYSI6ImNrZXRmZmEzNDIzcG4yenNheThrdzI0MHoifQ.5ZMdAvyl2Sw_rQRs_mL_VA',
         'id' : 'mapbox.satellite' 
-        // mapbox-streets-v8, satellite
+        // mapbox-streets-v8, satellite, mapbox.mapbox-terrain-v2, mapbox.mapbox-traffic-v1
       }
+    );
+  }
+
+  _crearMarcadores( ScanModel scan ){
+    return MarkerLayerOptions(
+      markers: <Marker>[
+        Marker(
+          width: 100.0,
+          height: 100.0,
+          point: scan.getLatLng(),
+          builder: ( context ) => Container(
+            child: Icon(
+              Icons.location_on, 
+              size: 45.0,
+              color: Theme.of(context).primaryColor,
+            ),
+          )
+        )
+      ]
     );
   }
 }
